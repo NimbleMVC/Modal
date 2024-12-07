@@ -1,5 +1,5 @@
 {
-    "name": "nimblephp/dialogbox",
+    "name": "nimblephp/modal",
     "description": "Dialogbox module for nimblephp",
     "type": "library",
     "license": "MIT",
