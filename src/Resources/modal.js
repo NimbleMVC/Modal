@@ -1,6 +1,6 @@
 (function($) {
     // Plugin definition
-    $.fn.dialogbox = function(action, options={}) {
+    $.fn.ajaxmodal = function(action, options={}) {
         return this.each(function() {
             const $element = $(this);
 
@@ -47,7 +47,7 @@
                     }).show();
 
                     document.getElementById(settings.id).addEventListener('hide.bs.modal', function () {
-                        $(this).dialogbox('destroy');
+                        $(this).ajaxmodal('destroy');
                     });
                 });
             } else if (action === 'refresh') {
@@ -64,5 +64,5 @@
 
 $(document).on('click', '.modallink', function (e) {
     e.preventDefault();
-    $(this).dialogbox('create');
+    $(this).ajaxmodal('create');
 });
