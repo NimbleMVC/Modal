@@ -6,9 +6,9 @@
 
             if (action === 'create' || !action) {
                 const defaultOptions = {
-                    title: $(this).attr('data-title') ?? 'Dialogbox',
+                    title: $(this).attr('data-title') ?? 'Modal',
                     body: '',
-                    id: `dialogbox-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+                    id: `modal-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
                     url: $(this).attr('href')
                 };
 
@@ -26,7 +26,7 @@
                     }
 
                     const modal = $(`
-                        <div class="modal modal-lg fade dialogbox-container" id="${settings.id}" tabindex="-1" aria-hidden="true">
+                        <div class="modal modal-lg fade" id="${settings.id}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -62,7 +62,7 @@
     };
 })(jQuery);
 
-$(document).on('click', '.dialogboxlink', function (e) {
+$(document).on('click', '.modallink', function (e) {
     e.preventDefault();
     $(this).dialogbox('create');
 });
