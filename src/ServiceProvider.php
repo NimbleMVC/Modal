@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimblephp\dialogbox;
+namespace Nimblephp\modal;
 
 use Krzysztofzylka\File\File;
 use Nimblephp\framework\Interfaces\ServiceProviderInterface;
