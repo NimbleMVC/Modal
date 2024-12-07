@@ -1,0 +1,4 @@
+/vendor/
+/composer.lock
+/test/
+/docker-compose.yml

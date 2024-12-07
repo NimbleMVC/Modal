@@ -1,0 +1,20 @@
+{
+    "name": "nimblephp/dialogbox",
+    "description": "Dialogbox module for nimblephp",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nimblephp\\dialogbox\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Krzysztof Żyłka",
+            "email": "krzysztofzylka@yahoo.com"
+        }
+    ],
+    "require": {
+        "nimblephp/framework": "^0.1.14"
+    }
+}
