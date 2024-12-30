@@ -1,8 +1,14 @@
 (function($) {
-    // Plugin definition
     $.fn.ajaxmodal = function(action, options={}) {
         return this.each(function() {
-            const $element = $(this);
+            const debug = true,
+                $element = $(this);
+
+            function addToDebugbar(message, label = '') {
+                console.log(label, message);
+                debugbar = $('.phpdebugbar-widgets-messages').eq(0).find('ul');
+                debugbar.append('<li class="phpdebugbar-widgets-list-item"><span class="phpdebugbar-widgets-label">' + label + '</span><span class="phpdebugbar-widgets-value phpdebugbar-widgets-info">' + message + '</span></li>');
+            }
 
             if (action === 'create' || !action) {
                 const defaultOptions = {
@@ -17,10 +23,17 @@
                 $.ajax({
                     url: settings.url
                 }).done(function(response) {
-                    console.log(response)
+                    if (debug) {
+                        addToDebugbar('done ' + settings.url, 'modal')
+                    }
+
                     if (typeof response.data === 'object') {
                         switch (response.type) {
                             case 'redirect':
+                                if (debug) {
+                                    addToDebugbar('redirect: ' + response.url, 'modal')
+                                }
+
                                 window.location.href = response.url;
                         }
                     }
@@ -33,7 +46,7 @@
                                         <h5 class="modal-title">${settings.title}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" data-url="${settings.url}">
                                         <p>${response}</p>
                                     </div>
                                 </div>
@@ -42,6 +55,7 @@
                     `);
 
                     $('body').append(modal);
+                    
                     new bootstrap.Modal(document.getElementById(settings.id), {
                         backdrop: false
                     }).show();
@@ -53,8 +67,7 @@
             } else if (action === 'refresh') {
                 //refresh
             } else if (action === 'destroy') {
-                const id = $(this).attr('id');
-                $('#' + id).remove();
+                $('#' + $(this).attr('id')).remove();
             } else {
                 console.warn(`Unknown action: ${action}`);
             }
@@ -64,5 +77,6 @@
 
 $(document).on('click', '.modallink', function (e) {
     e.preventDefault();
+
     $(this).ajaxmodal('create');
 });
