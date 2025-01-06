@@ -1,13 +1,10 @@
 (function($) {
     $.fn.ajaxmodal = function(action, options={}) {
         return this.each(function() {
-            const debug = true,
-                $element = $(this);
+            const debug = false;
 
-            function addToDebugbar(message, label = '') {
-                console.log(label, message);
-                debugbar = $('.phpdebugbar-widgets-messages').eq(0).find('ul');
-                debugbar.append('<li class="phpdebugbar-widgets-list-item"><span class="phpdebugbar-widgets-label">' + label + '</span><span class="phpdebugbar-widgets-value phpdebugbar-widgets-info">' + message + '</span></li>');
+            if (debug) {
+                console.log('.ajaxmodal', action, options)
             }
 
             if (action === 'create' || !action) {
@@ -20,18 +17,22 @@
 
                 const settings = $.extend({}, defaultOptions, options);
 
+                if (debug) {
+                    console.log('modal create', action, options, settings)
+                }
+
                 $.ajax({
                     url: settings.url
                 }).done(function(response) {
                     if (debug) {
-                        addToDebugbar('done ' + settings.url, 'modal')
+                        console.log('modal done', response)
                     }
 
                     if (typeof response.data === 'object') {
                         switch (response.type) {
                             case 'redirect':
                                 if (debug) {
-                                    addToDebugbar('redirect: ' + response.url, 'modal')
+                                    console.log('modal redirect', response)
                                 }
 
                                 window.location.href = response.url;
@@ -55,7 +56,7 @@
                     `);
 
                     $('body').append(modal);
-                    
+
                     new bootstrap.Modal(document.getElementById(settings.id), {
                         backdrop: false
                     }).show();
@@ -65,11 +66,20 @@
                     });
                 });
             } else if (action === 'refresh') {
-                //refresh
+                if (debug) {
+                    console.log('modal refresh', action, options)
+                }
             } else if (action === 'destroy') {
-                $('#' + $(this).attr('id')).remove();
+                $modal = $(this).closest('.modal');
+                $modal.find('.modal-header').find('[data-bs-dismiss="modal"]').trigger('click');
+
+                if (debug) {
+                    console.log('modal destroy', action, options, $modal)
+                }
+
+                $modal.remove();
             } else {
-                console.warn(`Unknown action: ${action}`);
+                console.log(`Unknown action: ${action}`);
             }
         });
     };
