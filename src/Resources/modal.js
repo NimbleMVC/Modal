@@ -14,14 +14,24 @@
                     id: `modal-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
                     url: $(this).attr('href'),
                     size: null,
-                    fullscreen: false
+                    fullscreen: false,
+                    spinner: true
                 };
+
 
                 const settings = $.extend({}, defaultOptions, options);
 
                 if (debug) {
                     console.log('modal create', action, options, settings)
                 }
+
+                $('body').append(`
+                    <div class="text-center" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 50000;" id="spinner_` + settings.id + `">
+                      <div class="spinner-border" role="status" style="position: absolute; top:50%">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                `);
 
                 $.ajax({
                     url: settings.url,
@@ -44,7 +54,7 @@
                             }
                         }
 
-                        if (typeof response.data === 'object') {
+                        if (typeof response === 'object') {
                             switch (response.type) {
                                 case 'redirect':
                                     if (debug) {
@@ -52,6 +62,7 @@
                                     }
 
                                     window.location.href = response.url;
+                                    return;
                             }
                         }
 
@@ -62,7 +73,7 @@
                         }
 
                         const modal = $(`
-                        <div class="modal fade modal-${settings.size}" id="${settings.id}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal modal-${settings.size}" id="${settings.id}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog ${fullscreen} modal-fullscreen-sm-down">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -84,11 +95,19 @@
                         document.getElementById(settings.id).addEventListener('hide.bs.modal', function () {
                             $(this).ajaxmodal('destroy');
                         });
+
+                        if (typeof settings !== 'undefined' && settings.spinner) {
+                            $('#spinner_' + settings.id).remove();
+                        }
                     }
                 })
             } else if (action === 'refresh') {
                 if (debug) {
                     console.log('modal refresh', action, options)
+                }
+
+                if (typeof settings !== 'undefined' && settings.spinner) {
+                    $('#spinner_' + settings.id).remove();
                 }
             } else if (action === 'destroy') {
                 $modal = $(this).closest('.modal');
@@ -99,8 +118,16 @@
                 }
 
                 $modal.remove();
+
+                if (typeof settings !== 'undefined' && settings.spinner) {
+                    $('#spinner_' + settings.id).remove();
+                }
             } else {
                 console.log(`Unknown action: ${action}`);
+
+                if (typeof settings !== 'undefined' && settings.spinner) {
+                    $('#spinner_' + settings.id).remove();
+                }
             }
         });
     };
