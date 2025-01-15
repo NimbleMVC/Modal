@@ -63,7 +63,7 @@
                         }
 
                         const modal = $(`
-                        <div class="modal fade modal-${settings.size}" id="${settings.id}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal fade modal-${settings.size}" id="${settings.id}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog ${fullscreen} modal-fullscreen-sm-down">
                                 <div class="modal-content">
                                     <div class="modal-header">
