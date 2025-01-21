@@ -14,7 +14,13 @@ trait ControllerModalTrait
     protected array $_modalConfig = [
         'title' => null,
         'size' => null,
-        'fullscreen' => false
+        'fullscreen' => false,
+        'menu' => [],
+        'class' => [
+            'body' => '',
+            'modal' => '',
+            'content' => ''
+        ]
     ];
 
     /**
@@ -53,12 +59,38 @@ trait ControllerModalTrait
     }
 
     /**
+     * Add menu to modal
+     * @param string $name
+     * @param string $url
+     * @return void
+     */
+    public function addModalMenuAction(string $name, string $url = '#', string $class = ''): void
+    {
+        $this->_modalConfig['menu'][] = [
+            'name' => $name,
+            'url' => $url,
+            'class' => $class
+        ];
+    }
+
+    /**
      * Render modal config in header
      * @return void
      */
     public function renderModalConfigHeader(): void
     {
         header('X-Modal-Config: ' . base64_encode(json_encode($this->_modalConfig)));
+    }
+
+    /**
+     * Add classes to node
+     * @param string $name
+     * @param string $classes
+     * @return void
+     */
+    public function setModalClass(string $name, string $classes): void
+    {
+        $this->_modalConfig['class'][$name] = $classes;
     }
 
 }
