@@ -39,6 +39,8 @@
                         size: null,
                         fullscreen: false,
                         menu: [],
+                        type: 'GET',
+                        data: {},
                         class: {
                             body: '',
                             modal: '',
@@ -52,6 +54,8 @@
 
                 $.ajax({
                     url: settings.url,
+                    type: settings.type,
+                    data: settings.data,
                     success: function (response, textStatus, request) {
                         if (request.getResponseHeader('X-Modal-Config') !== null) {
                             for (const [key, value] of Object.entries(JSON.parse(atob(request.getResponseHeader('X-Modal-Config'))))) {
@@ -113,10 +117,28 @@
             } else if (action === 'refresh') {
                 debugLog('modal refresh', {'action': action, 'options': options})
 
-                const $modalBody = $(this).find('.modal-body'),
-                    url = $modalBody.attr('data-url');
+                const $modalBody = $(this).find('.modal-body');
 
-                $modalBody.load(url);
+                $.ajax({
+                    url: $modalBody.attr('data-url'),
+                    success: (response, textStatus, request) => {
+                        settings = {};
+
+                        $modalBody.html(response);
+
+                        if (request.getResponseHeader('X-Modal-Config') !== null) {
+                            for (const [key, value] of Object.entries(JSON.parse(atob(request.getResponseHeader('X-Modal-Config'))))) {
+                                if (value !== null) {
+                                    settings[key] = value
+                                }
+                            }
+                        }
+
+                        let menu = renderMenu(settings);
+
+                        $modalBody.closest('.modal').find('.modal-menu').replaceWith(menu);
+                    }
+                })
             } else if (action === 'destroy') {
                 $modal = $(this).closest('.modal');
                 $modal.find('.modal-header').find('[data-bs-dismiss="modal"]').trigger('click');
