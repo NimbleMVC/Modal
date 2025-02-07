@@ -27,6 +27,7 @@ trait ControllerModalTrait
      * Set modal title
      * @param string $name
      * @return void
+     * @action disabled
      */
     public function setModalTitle(string $name): void
     {
@@ -38,6 +39,7 @@ trait ControllerModalTrait
      * @param string $size
      * @return void
      * @throws NimbleException
+     * @action disabled
      */
     public function setModalSize(string $size): void
     {
@@ -52,6 +54,7 @@ trait ControllerModalTrait
      * Set modal fullscreen mode
      * @param bool $fullscreen
      * @return void
+     * @action disabled
      */
     public function setModalFullscreen(bool $fullscreen): void
     {
@@ -63,6 +66,7 @@ trait ControllerModalTrait
      * @param string $name
      * @param string $url
      * @return void
+     * @action disabled
      */
     public function addModalMenuAction(string $name, string $url = '#', string $class = ''): void
     {
@@ -76,6 +80,7 @@ trait ControllerModalTrait
     /**
      * Render modal config in header
      * @return void
+     * @action disabled
      */
     public function renderModalConfigHeader(): void
     {
@@ -87,6 +92,7 @@ trait ControllerModalTrait
      * @param string $name
      * @param string $classes
      * @return void
+     * @action disabled
      */
     public function setModalClass(string $name, string $classes): void
     {
