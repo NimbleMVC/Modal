@@ -1,8 +1,8 @@
 <?php
 
-namespace Nimblephp\modal;
+namespace NimblePHP\Modal;
 
-use Nimblephp\framework\Exception\NimbleException;
+use Nimblephp\Framework\Exception\NimbleException;
 
 trait ControllerModalTrait
 {

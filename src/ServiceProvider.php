@@ -1,12 +1,12 @@
 <?php
 
-namespace Nimblephp\modal;
+namespace NimblePHP\Modal;
 
 use Krzysztofzylka\File\File;
-use Nimblephp\framework\Interfaces\ServiceProviderInterface;
-use Nimblephp\framework\Kernel;
-use Nimblephp\framework\ModuleRegister;
-use Nimblephp\twig\Twig;
+use Nimblephp\Framework\Interfaces\ServiceProviderInterface;
+use Nimblephp\Framework\Kernel;
+use Nimblephp\Framework\ModuleRegister;
+use Nimblephp\Twig\Twig;
 
 class ServiceProvider implements ServiceProviderInterface
 {

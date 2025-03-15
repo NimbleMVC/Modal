@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Nimblephp\\modal\\": "src/"
+            "NimblePHP\\Modal\\": "src/"
         }
     },
     "authors": [
@@ -16,6 +16,6 @@
     ],
     "require": {
         "php": ">=8.2",
-        "nimblephp/framework": "^0.1.14"
+        "nimblephp/framework": "0.2.0"
     }
 }
