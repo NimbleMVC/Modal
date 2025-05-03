@@ -84,7 +84,9 @@ trait ControllerModalTrait
      */
     public function renderModalConfigHeader(): void
     {
-        header('X-Modal-Config: ' . base64_encode(json_encode($this->_modalConfig)));
+        if (!headers_sent($file, $line)) {
+            header('X-Modal-Config: ' . base64_encode(json_encode($this->_modalConfig)));
+        }
     }
 
     /**
