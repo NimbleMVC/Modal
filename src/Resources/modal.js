@@ -2,7 +2,6 @@
     $.fn.ajaxmodal = function(action, options={}) {
         const debug = false;
         const $element = $(this);
-        const href = $(this).attr('href');
 
         function debugLog(...message) {
             if (!debug) {
@@ -13,16 +12,10 @@
         }
 
         function disable() {
-            const hrefVal = $element.attr('href');
-            $element.attr('oldhref', hrefVal);
-            $element.removeAttr('href');
             $element.addClass('disabled');
         }
 
         function enable() {
-            const oldHrefVal = $element.attr('oldhref');
-            $element.attr('href', oldHrefVal);
-            $element.removeAttr('oldhref');
             $element.removeClass('disabled');
         }
 
@@ -46,10 +39,6 @@
             debugLog('modal', {'action': action, 'options': options})
 
             if (action === 'create' || !action) {
-                if ($element.attr('href') === undefined) {
-                    debugLog('undefined href attribute', {'action': action, 'options': options})
-                    return;
-                }
 
                 disable();
                 const settings = $.extend(
@@ -57,7 +46,7 @@
                         title: $(this).attr('data-title') ?? 'Modal',
                         body: '',
                         id: `modal-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-                        url: href,
+                        url: $(this).attr('href'),
                         size: null,
                         fullscreen: false,
                         menu: [],
