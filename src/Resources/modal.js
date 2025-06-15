@@ -68,6 +68,16 @@
                     type: settings.type,
                     data: settings.data,
                     success: function (response, textStatus, request) {
+                        let preventDefault = false;
+
+                        $element.trigger('modallink.success', [response, $element, function () {
+                            preventDefault = true;
+                        }]);
+
+                        if (preventDefault) {
+                            return;
+                        }
+
                         if (request.getResponseHeader('X-Modal-Config') !== null) {
                             for (const [key, value] of Object.entries(JSON.parse(atob(request.getResponseHeader('X-Modal-Config'))))) {
                                 if (value !== null) {
